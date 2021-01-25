@@ -1,0 +1,44 @@
+body{
+    background-color: rgb(192, 142, 14);
+}
+
+p{
+    color: rgb(235, 221, 203);
+    font-size: 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+#score{
+    text-align: center;
+}
+
+.clear{
+    clear: both;
+}
+
+#size-bloc{
+    padding-left: 45%;
+}
+
+#size-title{
+    float: left;
+    margin-top: 0;
+}
+
+#size{
+    width: 50px;
+    margin-left: 10px;
+    border-radius: 3px;
+}
+
+#canvas-bloc{
+    padding-left: 33%;
+
+}
+
+#canvas{
+    background-color: rgb(223, 189, 145) ;
+}
