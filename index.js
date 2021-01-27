@@ -1,48 +1,51 @@
-var canvas =document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
 
-var sizeInput = document.getElementById("size");
-var changeSize = document.getElementById("change-size");
-var scoreLabel = document.getElementById("score");
+var sizeInput = document.getElementById('size');
+var changeSize = document.getElementById('change-size');
+var scoreLabel = document.getElementById('score');
 
 var score = 0;
 var size = 4;
 var width = canvas.width / size - 6;
 
-var cells =[];
+var cells = [];
 var fontSize;
-var loss= false;
+var loss = false;
 
 startGame();
 
-function startGame(){
-    createCells();
-    drawAllCells();
-    pasteNewCell();
+changeSize.onclick = function () {
+  if (sizeInput.value >= 2 && sizeInput.value <= 20) {
+    size = sizeInput.value;
+    width = canvas.width / size - 6;
+    console.log(sizeInput.value);
+    canvasClean();
+    startGame();
+  }
 }
 
-function cell(row,coll){
-    this.value = 0;
-    this.x = coll * width + 5 * (coll +1);
-    this.y = row * width + 5 *(row+1);
+function cell(row, coll) {
+  this.value = 0;
+  this.x = coll*width + 5 * (coll + 1);
+  this.y = row* width + 5 * (row + 1);
 }
 
 function createCells() {
-    for (var i=0; i< size ; i++){
-        cells[i] = [];
-        for (var j = 0; j< size; j++){
-            cells[i][j] = new cell(i,j);
-
-        }
+  var i, j;
+  for(i = 0; i < size; i++) {
+    cells[i] = [];
+    for(j = 0; j < size; j++) {
+      cells[i][j] = new cell(i, j);
     }
+  }
 }
 
 function drawCell(cell) {
-    ctx.beginPath();
-    ctx.rect(cell.x ,cell.y, width,width);
-
-    switch(cell.value){
-        case 0 :ctx.fillStyle = "#d6a3a3"; break;
+  ctx.beginPath();
+  ctx.rect(cell.x, cell.y, width, width);
+  switch (cell.value){
+   case 0 :ctx.fillStyle = "#d6a3a3"; break;
         case 2 :ctx.fillStyle = "#FF5733"; break;
         case 4 :ctx.fillStyle = "#BDC81E"; break;
         case 8 :ctx.fillStyle = "#B133FF"; break;
@@ -56,60 +59,184 @@ function drawCell(cell) {
         case 2048 :ctx.fillStyle = "#8DD644"; break;
         case 4096 :ctx.fillStyle = "#25B772"; break;
         default : ctx.fillStyle = "#ffffff";
-    }
+  }
+  ctx.fill();
+  if (cell.value) {
+    fontSize = width / 2;
+    ctx.font = fontSize + 'px Arial';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.fillText(cell.value, cell.x + width / 2, cell.y + width / 2 + width/7);
+  }
+}
 
-    ctx.fill();
-    if (cell.value) {
-        fontSize = width /2;
-        ctx.font = fontSize + "px Arial";
-        ctx.fillStyle = "white";
-        ctx.textAlign = "center";
-        ctx.fillText(cell.value, cell.x+width/2, cell.y+width/2);
+function canvasClean() {
+  ctx.clearRect(0, 0, 500, 500);
+}
+
+document.onkeydown = function (event) {
+  if (!loss) {
+    if (event.keyCode === 38 || event.keyCode === 87) {
+      moveUp(); 
+    } else if (event.keyCode === 39 || event.keyCode === 68) {
+      moveRight();
+    } else if (event.keyCode === 40 || event.keyCode === 83) {
+      moveDown(); 
+    } else if (event.keyCode === 37 || event.keyCode === 65) {
+      moveLeft(); 
     }
+    scoreLabel.innerHTML = 'Score : ' + score;
+  }
+}
+
+function startGame() {
+  createCells();
+  drawAllCells();
+  pasteNewCell();
+  pasteNewCell();
+}
+
+function finishGame() {
+  canvas.style.opacity = '0.5';
+  loss = true;
 }
 
 function drawAllCells() {
-    for(var i=0; i<size; i++) {
-        for(var j=0; j<size; j++){
-            drawCell(cells[i][j]);
-        }
+  var i, j;
+  for(i = 0; i < size; i++) {
+    for(j = 0; j < size; j++) {
+      drawCell(cells[i][j]);
     }
+  }
 }
 
 function pasteNewCell() {
-    while(true){
-        var row= Math.floor(Math.random() * size);
-        var coll= Math.floor(Math.random() * size);
-        if (!cell([row] [coll].value)){
-            cells[row][coll].value = 2 * Math.ceil(Math.random() * 2);
-            drawAllCells();
-            return;
+  var countFree = 0;
+  var i, j;
+  for(i = 0; i < size; i++) {
+    for(j = 0; j < size; j++) {
+      if(!cells[i][j].value) {
+        countFree++;
+      }
+    }
+  }
+  if(!countFree) {
+    finishGame();
+    return;
+  }
+  while(true) {
+    var row = Math.floor(Math.random() * size);
+    var coll = Math.floor(Math.random() * size);
+    if(!cells[row][coll].value) {
+      cells[row][coll].value = 2 * Math.ceil(Math.random() * 2);
+      drawAllCells();
+      return;
+    }
+  }
+}
+
+function moveRight () {
+  var i, j;
+  var coll;
+  for(i = 0; i < size; i++) {
+    for(j = size - 2; j >= 0; j--) {
+      if(cells[i][j].value) {
+        coll = j;
+        while (coll + 1 < size) {
+          if (!cells[i][coll + 1].value) {
+            cells[i][coll + 1].value = cells[i][coll].value;
+            cells[i][coll].value = 0;
+            coll++;
+          } else if (cells[i][coll].value == cells[i][coll + 1].value) {
+            cells[i][coll + 1].value *= 2;
+            score +=  cells[i][coll + 1].value;
+            cells[i][coll].value = 0;
+            break;
+          } else {
+            break;
+          }
         }
+      }
     }
+  }
+  pasteNewCell();
 }
 
-document.onkeydown = function (event){
-    if(!loss){
-        if (event.key == 38 || event.key == 87) moveUp();
-        if (event.key == 39 || event.key == 68) moveRight();
-        if (event.key == 40 || event.key == 83) moveDown();
-        if (event.key == 37 || event.key == 65) moveLeft();
-        scoreLabel.innerHTML = "Score :" + score;
+function moveLeft() {
+  var i, j;
+  var coll;
+  for(i = 0; i < size; i++) {
+    for(j = 1; j < size; j++) {
+      if(cells[i][j].value) {
+        coll = j;
+        while (coll - 1 >= 0) {
+          if (!cells[i][coll - 1].value) {
+            cells[i][coll - 1].value = cells[i][coll].value;
+            cells[i][coll].value = 0;
+            coll--;
+          } else if (cells[i][coll].value == cells[i][coll - 1].value) {
+            cells[i][coll - 1].value *= 2;
+            score +=   cells[i][coll - 1].value;
+            cells[i][coll].value = 0;
+            break;
+          } else {
+            break; 
+          }
+        }
+      }
     }
+  }
+  pasteNewCell();
 }
 
-function moveUp(){
-
+function moveUp() {
+  var i, j, row;
+  for(j = 0; j < size; j++) {
+    for(i = 1; i < size; i++) {
+      if(cells[i][j].value) {
+        row = i;
+        while (row > 0) {
+          if(!cells[row - 1][j].value) {
+            cells[row - 1][j].value = cells[row][j].value;
+            cells[row][j].value = 0;
+            row--;
+          } else if (cells[row][j].value == cells[row - 1][j].value) {
+            cells[row - 1][j].value *= 2;
+            score +=  cells[row - 1][j].value;
+            cells[row][j].value = 0;
+            break;
+          } else {
+            break; 
+          }
+        }
+      }
+    }
+  }
+  pasteNewCell();
 }
 
-function moveRight(){
-    
-}
-
-function moveDown(){
-    
-}
-
-function moveLeft(){
-    
+function moveDown() {
+  var i, j, row;
+  for(j = 0; j < size; j++) {
+    for(i = size - 2; i >= 0; i--) {
+      if(cells[i][j].value) {
+        row = i;
+        while (row + 1 < size) {
+          if (!cells[row + 1][j].value) {
+            cells[row + 1][j].value = cells[row][j].value;
+            cells[row][j].value = 0;
+            row++;
+          } else if (cells[row][j].value == cells[row + 1][j].value) {
+            cells[row + 1][j].value *= 2;
+            score +=  cells[row + 1][j].value;
+            cells[row][j].value = 0;
+            break;
+          } else {
+            break; 
+          }
+        }
+      }
+    }
+  }
+  pasteNewCell();
 }
