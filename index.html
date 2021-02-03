@@ -7,16 +7,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1> 2048 </h1>
-    <p id="score"></p>
-    <div id="size-bloc">
-        <p id="size-title"> Size :</p>
-        <input id="size" type="number" value="4">
-        <input id="change-size" type="button" value="OK">
-        <div class="clear"></div>
-    </div>
-    <div id="canvas-bloc">
-        <canvas id="canvas" width="500" height="500"></canvas>
+    <div class="Game">
+        <h1> 2048 </h1>
+        <p id="score"></p>
+        <div id="startScreen">
+            <p><i>Click Here To Start <br>
+                Move Arrow Keys for Direction Change <br>
+            </i></p>
+        </div>
+    
+        <div class="size-bloc hide">
+            <p id="size-title">Grid Size :</p>
+            <input id="size" type="number" value="4">
+
+            <p id="size-title"> Base :</p>
+            <input id="base" type="number" value="2">
+
+            <input id="change-size" type="button" value="OK">
+
+            <div class="clear"></div>
+        </div>
+        <div class="gameArea"> 
+            <canvas id="canvas" width="500" height="500"></canvas>
+        </div>
     </div>
     <script src="index.js"></script>
     
