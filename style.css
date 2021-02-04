@@ -2,7 +2,7 @@ body{
     background-image:url("background.jpg");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+
 }
 
 #startScreen {
@@ -31,31 +31,52 @@ h1{
 }
 
 #score{
+    top:10px;
+    position: absolute;
+    left: 40px;
+    background: rgb(55, 97, 122);
+    width: 250px;
+    line-height: 70px;
     text-align: center;
+    color: white;
+    box-shadow: 0 5px 5px #777;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .clear{
     clear: both;
 }
 .size-bloc{
-    padding-left: 40%;
+        top: 30px;
+        left: 78%;
+        position: absolute; 
+        border-radius: 20px;
+        background:rgb(55, 97, 122);
+        width: 260px;
+        line-height: 60px; 
+        box-shadow: 0 5px 5px #777;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ 
 }
 
 #size-title{
+    color: white;
     float: left;
     margin-top: 0;
+    text-align: center;
 }
 
 #size , #base{
     width: 50px;
     margin-left: 10px;
     border-radius: 10px;
-    box-shadow: 0 5px 5px rgb(134, 123, 123);
+    box-shadow: 0 5px 5px rgb(56, 52, 52);
     text-align: center;
     font: outline;
 } 
 
 .gameArea{
+    padding-top:40px;
     padding-left: 33%;
 
 }
