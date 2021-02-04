@@ -2,7 +2,7 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
 var sizeInput = document.getElementById('size');
-var changeSize = document.getElementById('change-size');
+const changeGridSize = document.getElementById('change-size');
 var scoreLabel = document.getElementById('score');
 
 var score = 0;
@@ -13,13 +13,15 @@ var cells = [];
 var fontSize;
 var loss = false;
 
+var base =2;
+
 startGame();
 
-changeSize.onclick = function () {
+changeGridSize.onclick = function () {
+  base=document.getElementById('base').value*1;
   if (sizeInput.value >= 2 && sizeInput.value <= 20) {
     size = sizeInput.value;
     width = canvas.width / size - 6;
-    console.log(sizeInput.value);
     canvasClean();
     startGame();
   }
@@ -128,7 +130,13 @@ function pasteNewCell() {
     var row = Math.floor(Math.random() * size);
     var coll = Math.floor(Math.random() * size);
     if(!cells[row][coll].value) {
-      cells[row][coll].value = 2 * Math.ceil(Math.random() * 2);
+      if(base==2)
+      {
+        cells[row][coll].value =2* Math.ceil(Math.random() * 2);
+      }
+      else{
+      cells[row][coll].value = base;
+      }
       drawAllCells();
       return;
     }
