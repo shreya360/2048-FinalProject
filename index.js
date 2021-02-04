@@ -116,11 +116,17 @@ document.onkeydown = function (event) {
   }
 }
 
+function audio(path)
+{
+    var audio = new Audio(path);
+    audio.play();
+}
+
 function startGame() {
-  
   // gameArea.classList.remove('hide');
   sizebloc.classList.remove('hide');
   startScreen.classList.add('hide');
+  // audio('bgsound.mp3');
 
 
   createCells();
@@ -134,6 +140,7 @@ function finishGame() {
   loss = true;
   startScreen.classList.remove('hide');
   startScreen.innerHTML= "GAME OVER !! <br> Your Final Score is <br>" + score ;
+  audio('gameover.wav');
 }
 
 function drawAllCells() {
@@ -201,6 +208,7 @@ function moveRight () {
     }
   }
   pasteNewCell();
+  audio('move.mp3');
 }
 
 function moveLeft() {
@@ -228,6 +236,7 @@ function moveLeft() {
     }
   }
   pasteNewCell();
+  audio('move.mp3');
 }
 
 function moveUp() {
@@ -254,6 +263,7 @@ function moveUp() {
     }
   }
   pasteNewCell();
+  audio('move.mp3');
 }
 
 function moveDown() {
@@ -280,4 +290,5 @@ function moveDown() {
     }
   }
   pasteNewCell();
+  audio('move.mp3');
 }
