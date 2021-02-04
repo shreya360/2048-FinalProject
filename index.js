@@ -5,6 +5,10 @@ var sizeInput = document.getElementById('size');
 const changeGridSize = document.getElementById('change-size');
 var scoreLabel = document.getElementById('score');
 
+const startScreen = document.getElementById('startScreen');
+const gameArea = document.querySelector(".gameArea");
+const sizebloc = document.querySelector(".size-bloc");
+
 var score = 0;
 var size = 4;
 var width = canvas.width / size - 6;
@@ -92,6 +96,12 @@ document.onkeydown = function (event) {
 }
 
 function startGame() {
+
+  
+  // gameArea.classList.remove('hide');
+  sizebloc.classList.remove('hide');
+  startScreen.classList.add('hide');
+
   createCells();
   drawAllCells();
   pasteNewCell();
