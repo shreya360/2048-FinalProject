@@ -54,49 +54,6 @@ function createCells() {
   }
 }
 
-function drawCell(cell) {
-  ctx.beginPath();
-  ctx.rect(cell.x, cell.y, width, width);
-  switch (cell.value){
-//    case 0 :ctx.fillStyle = "#d6a3a3"; break;
-        case 2 :ctx.fillStyle = "#FF5733"; break;
-        case 4 :ctx.fillStyle = "#BDC81E"; break;
-        case 8 :ctx.fillStyle = "#B133FF"; break;
-        case 16 :ctx.fillStyle = "#1EC88C"; break;
-        case 32 :ctx.fillStyle = "#F7950C"; break;
-        case 64 :ctx.fillStyle = "#D64475"; break;
-        case 128 :ctx.fillStyle = "#D644B4"; break;
-        case 256 :ctx.fillStyle = "#00ff8d"; break;
-        case 512 :ctx.fillStyle = "#D65E44"; break;
-        case 1024 :ctx.fillStyle = "#CCD644"; break;
-        case 2048 :ctx.fillStyle = "#8DD644"; break;
-        case 4096 :ctx.fillStyle = "#25B772"; break;
-        
-        
-        case 5 :ctx.fillStyle = "#FF5733"; break;
-        case 10:ctx.fillStyle = "#BDC81E"; break;
-        case 20 :ctx.fillStyle = "#B133FF"; break;
-        case 40 :ctx.fillStyle = "#1EC88C"; break;
-        case 80 :ctx.fillStyle = "#F7950C"; break;
-        case 160 :ctx.fillStyle = "#D64475"; break;
-        case 320 :ctx.fillStyle = "#D644B4"; break;
-        case 640 :ctx.fillStyle = "#00ff8d"; break;
-        case 1280 :ctx.fillStyle = "#D65E44"; break;
-        case 2560 :ctx.fillStyle = "#CCD644"; break;
-        case 5120 :ctx.fillStyle = "#8DD644"; break;
-        case 10240 :ctx.fillStyle = "#25B772"; break;
-        default : ctx.fillStyle = "#ffffff";
-  }
-  ctx.fill();
-  if (cell.value) {
-    fontSize = width / 2;
-    ctx.font = fontSize + 'px Arial';
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'center';
-    ctx.fillText(cell.value, cell.x + width / 2, cell.y + width / 2 + width/7);
-  }
-}
-
 function canvasClean() {
   ctx.clearRect(0, 0, 500, 500);
 }
@@ -126,7 +83,7 @@ function startGame() {
   // gameArea.classList.remove('hide');
   sizebloc.classList.remove('hide');
   startScreen.classList.add('hide');
-  audio('start.mp3');
+  audio('music/start.mp3');
 
 
   createCells();
@@ -140,7 +97,7 @@ function finishGame() {
   loss = true;
   startScreen.classList.remove('hide');
   startScreen.innerHTML= "GAME OVER !! <br> Your Final Score is <br>" + score ;
-  audio('gameover.wav');
+  audio('music/gameover.wav');
 }
 
 function drawAllCells() {
@@ -148,37 +105,6 @@ function drawAllCells() {
   for(i = 0; i < size; i++) {
     for(j = 0; j < size; j++) {
       drawCell(cells[i][j]);
-    }
-  }
-}
-
-function pasteNewCell() {
-  var countFree = 0;
-  var i, j;
-  for(i = 0; i < size; i++) {
-    for(j = 0; j < size; j++) {
-      if(!cells[i][j].value) {
-        countFree++;
-      }
-    }
-  }
-  if(!countFree) {
-    finishGame();
-    return;
-  }
-  while(true) {
-    var row = Math.floor(Math.random() * size);
-    var coll = Math.floor(Math.random() * size);
-    if(!cells[row][coll].value) {
-      if(base==2)
-      {
-        cells[row][coll].value =2* Math.ceil(Math.random() * 2);
-      }
-      else{
-      cells[row][coll].value = base;
-      }
-      drawAllCells();
-      return;
     }
   }
 }
@@ -208,7 +134,7 @@ function moveRight () {
     }
   }
   pasteNewCell();
-  audio('move.mp3');
+  audio('music/move.mp3');
 }
 
 function moveLeft() {
@@ -236,7 +162,7 @@ function moveLeft() {
     }
   }
   pasteNewCell();
-  audio('move.mp3');
+  audio('music/move.mp3');
 }
 
 function moveUp() {
@@ -263,7 +189,7 @@ function moveUp() {
     }
   }
   pasteNewCell();
-  audio('move.mp3');
+  audio('music/move.mp3');
 }
 
 function moveDown() {
@@ -290,5 +216,5 @@ function moveDown() {
     }
   }
   pasteNewCell();
-  audio('move.mp3');
+  audio('music/move.mp3');
 }
