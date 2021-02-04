@@ -126,7 +126,7 @@ function startGame() {
   // gameArea.classList.remove('hide');
   sizebloc.classList.remove('hide');
   startScreen.classList.add('hide');
-  // audio('bgsound.mp3');
+  audio('start.mp3');
 
 
   createCells();
