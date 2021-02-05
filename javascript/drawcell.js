@@ -40,3 +40,12 @@ function drawCell(cell) {
       ctx.fillText(cell.value, cell.x + width / 2, cell.y + width / 2 + width/7);
     }
   }
+
+  function drawAllCells() {
+    var i, j;
+    for(i = 0; i < size; i++) {
+      for(j = 0; j < size; j++) {
+        drawCell(cells[i][j]);
+      }
+    }
+  };
